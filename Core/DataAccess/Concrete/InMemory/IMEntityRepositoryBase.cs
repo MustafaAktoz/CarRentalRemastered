@@ -12,7 +12,7 @@ namespace Core.DataAccess.Concrete.InMemory
     public class IMEntityRepositoryBase<TEntity> : IEntityRepository<TEntity>
         where TEntity : class, IEntity, new()
     {
-        List<TEntity> _entities;
+        protected List<TEntity> _entities;
 
         public IMEntityRepositoryBase()
         {
