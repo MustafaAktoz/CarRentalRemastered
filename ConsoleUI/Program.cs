@@ -40,7 +40,7 @@ namespace ConsoleUI
             Console.WriteLine("\n--------------------------------\n");
 
             Console.WriteLine("Silindikten Sonra");
-            _carService.Delete(new Car { Id = 3 });
+            _carService.Delete(new Car { Id = 2 });
             cars.ForEach(currentCar => Console.WriteLine(currentCar.Name));
 
             Console.WriteLine("\n--------------------------------\n");
