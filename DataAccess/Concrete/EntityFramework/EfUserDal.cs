@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserDal:EFEntityRepositoryBase<User,EFCarRentalContext>,IUserDal
+    public class EFUserDal:EFEntityRepositoryBase<User,EFCarRentalContext>,IUserDal
     {
     }
 }

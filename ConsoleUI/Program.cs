@@ -21,9 +21,9 @@ namespace ConsoleUI
             _carService = new CarManager(new EFCarDal());
             _brandService = new BrandManager(new EFBrandDal());
             _colorService = new ColorManager(new EFColorDal());
-            _rentalService = new RentalManager(new EfRentalDal());
-            _customerService = new CustomerManager(new EfCustomerDal());
-            _userService = new UserManager(new EfUserDal());
+            _rentalService = new RentalManager(new EFRentalDal());
+            _customerService = new CustomerManager(new EFCustomerDal());
+            _userService = new UserManager(new EFUserDal());
         }
 
         static void Main(string[] args)
