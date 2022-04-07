@@ -13,5 +13,7 @@ namespace Business.Constants
         public const string Deleted = "Başarıyla eklendi";
         public const string Geted = "Data başarıyla getirildi";
         public const string Listed = "Data başarıyla listelendi";
+
+        public const string TheCarHasNotBeenDeliveredYet="Araba henüz teslim edilmemiş";
     }
 }
