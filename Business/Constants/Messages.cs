@@ -15,5 +15,6 @@ namespace Business.Constants
         public const string Listed = "Data başarıyla listelendi";
 
         public const string TheCarHasNotBeenDeliveredYet="Araba henüz teslim edilmemiş";
+        public const string TheImageLimitForThisCarHasBeenExceeded="Bu araba için daha fazla resim ekleyemezsin";
     }
 }

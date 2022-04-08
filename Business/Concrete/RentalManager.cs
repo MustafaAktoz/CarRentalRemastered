@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,7 +23,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var result=CheckIfTheCarHasBeenDelivered(rental);
+            var result=BusinessRules.Run(CheckIfTheCarHasBeenDelivered(rental));
             if (!result.Success) return result;
 
             _rentalDal.Add(rental);
