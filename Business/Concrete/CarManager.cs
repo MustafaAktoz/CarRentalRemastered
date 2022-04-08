@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Validation.FluentValidation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
@@ -23,9 +24,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [FluentValidationAspect(typeof(FVCarValidator))]
         public IResult Add(Car car)
         {
-            FluentValidationTool.Validate(new FVCarValidator(), car);
             _carDal.Add(car);
             return new SuccessResult(Messages.Added);
         }
