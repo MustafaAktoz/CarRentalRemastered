@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac.Security;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspect.Autofac.Validation.FluentValidation;
@@ -37,6 +38,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
+        [SecuredOperationAspect("admin")]
         public IDataResult<List<Car>> GetAll()
         {
             var result = _carDal.GetAll();

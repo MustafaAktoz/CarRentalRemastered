@@ -38,10 +38,22 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(result,Messages.Listed);
         }
 
+        public IDataResult<User> GetByEmail(string email)
+        {
+            var result = _userDal.Get(u => u.Email == email);
+            return new SuccessDataResult<User>(result,Messages.Geted);
+        }
+
         public IDataResult<User> GetById(int id)
         {
             var result = _userDal.Get(u=>u.Id==id);
             return new SuccessDataResult<User>(result, Messages.Geted);
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        {
+            var result = _userDal.GetClaims(user);
+            return new SuccessDataResult<List<OperationClaim>>(result,Messages.Listed);
         }
 
         public IResult Update(User user)
