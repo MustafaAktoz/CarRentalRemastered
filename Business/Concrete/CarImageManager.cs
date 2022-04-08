@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspect.Autofac.Transaction;
 using Core.Utilities.Business;
 using Core.Utilities.Helpers.FileHelpers.Abstract;
 using Core.Utilities.Result;
@@ -26,6 +27,7 @@ namespace Business.Concrete
             _fileHelper = fileHelper;
         }
 
+        [TransactionScopeAspect]
         public IResult Add(int carId, IFormFile file)
         {
             var result = BusinessRules.Run(CheckIfTheImageLimitForThisCarHasBeenExceeded(carId));

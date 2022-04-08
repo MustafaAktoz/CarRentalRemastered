@@ -2,6 +2,8 @@
 using Business.BusinessAspect.Autofac.Security;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Caching;
+using Core.Aspect.Autofac.Performance;
 using Core.Aspect.Autofac.Validation.FluentValidation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Result;
@@ -25,6 +27,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [RemoveCashAspect("ICarService.Get")]
         [FluentValidationAspect(typeof(FVCarValidator))]
         public IResult Add(Car car)
         {
@@ -32,13 +35,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [SecuredOperationAspect("admin")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
             return new SuccessResult(Messages.Deleted);
         }
 
-        [SecuredOperationAspect("admin")]
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             var result = _carDal.GetAll();
@@ -63,6 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(result, Messages.Geted);
         }
 
+        [PerformanceAspect(0.01)]
         public IDataResult<List<CarDetailDTO>> GetDetails()
         {
             var result = _carDal.GetDetails();
