@@ -17,7 +17,7 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        string _defaultImageName = "default.png";
+        string _defaultImagePath = "images/default.png";
 
         ICarImageDal _carImageDal;
         IFileHelper _fileHelper;
@@ -59,10 +59,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(result, Messages.Listed);
         }
 
-        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        public IDataResult<List<CarImage>> GetAllByCarId(int carId)
         {
             var result = _carImageDal.GetAll(ci => ci.CarId == carId);
-            if (result.Count == 0) result.Add(new CarImage { ImagePath = _defaultImageName });
+            if (result.Count == 0) result.Add(new CarImage { ImagePath = _defaultImagePath });
             return new SuccessDataResult<List<CarImage>>(result, Messages.Listed);
         }
 

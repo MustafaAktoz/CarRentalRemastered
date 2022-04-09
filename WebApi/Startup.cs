@@ -73,6 +73,8 @@ namespace WebApi
 
             app.UseCors(response => response.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin());
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
