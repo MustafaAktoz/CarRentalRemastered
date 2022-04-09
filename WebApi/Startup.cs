@@ -33,6 +33,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -57,6 +58,7 @@ namespace WebApi
                 });
 
             services.AddDependencyResolvers(new CoreModule());
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +70,8 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi v1"));
             }
+
+            app.UseCors(response => response.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin());
 
             app.UseHttpsRedirection();
 

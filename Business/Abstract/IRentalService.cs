@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Result;
 using Entities.Concrete;
+using Entities.DTO;
 using System.Collections.Generic;
 
 namespace Business.Abstract
@@ -11,5 +12,6 @@ namespace Business.Abstract
         IResult Delete(Rental rental);
         IDataResult<Rental> GetById(int id);
         IDataResult<List<Rental>> GetAll();
+        IDataResult<List<RentalDetailDTO>> GetDetails();
     }
 }
