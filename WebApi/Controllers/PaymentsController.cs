@@ -7,46 +7,46 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RentalsController : ControllerBase
+    public class PaymentsController : ControllerBase
     {
-        IRentalService _rentalService;
+        IPaymentService _paymentService;
 
-        public RentalsController(IRentalService rentalService)
+        public PaymentsController(IPaymentService paymentService)
         {
-            _rentalService = rentalService;
+            _paymentService = paymentService;
         }
 
-        [HttpPost("add")]
-        public IActionResult Add(Rental rental)
+        [HttpPost("pay")]
+        public IActionResult Pay(Payment payment)
         {
-            var result = _rentalService.Add(rental);
+            var result = _paymentService.Pay(payment);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpPost("rulesForAdding")]
-        public IActionResult RulesForAdding(Rental rental)
+        [HttpPost("add")]
+        public IActionResult Add(Payment payment)
         {
-            var result = _rentalService.RulesForAdding(rental);
+            var result = _paymentService.Add(payment);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Rental rental)
+        public IActionResult Update(Payment payment)
         {
-            var result = _rentalService.Update(rental);
+            var result = _paymentService.Update(payment);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Rental rental)
+        public IActionResult Delete(Payment payment)
         {
-            var result = _rentalService.Delete(rental);
+            var result = _paymentService.Delete(payment);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
@@ -55,7 +55,7 @@ namespace WebApi.Controllers
         [HttpGet("getById")]
         public IActionResult GetById(int id)
         {
-            var result = _rentalService.GetById(id);
+            var result = _paymentService.GetById(id);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
@@ -64,16 +64,16 @@ namespace WebApi.Controllers
         [HttpGet("getAll")]
         public IActionResult GetAll()
         {
-            var result = _rentalService.GetAll();
+            var result = _paymentService.GetAll();
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);
         }
 
-        [HttpGet("getDetails")]
-        public IActionResult GetDetails()
+        [HttpGet("getAllByUserId")]
+        public IActionResult GetAllByUserId(int userId)
         {
-            var result = _rentalService.GetDetails();
+            var result = _paymentService.GetAllByUserId(userId);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);

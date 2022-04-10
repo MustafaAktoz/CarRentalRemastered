@@ -13,5 +13,6 @@ namespace Business.Abstract
         IDataResult<Rental> GetById(int id);
         IDataResult<List<Rental>> GetAll();
         IDataResult<List<RentalDetailDTO>> GetDetails();
+        IResult RulesForAdding(Rental rental);
     }
 }

@@ -7,6 +7,7 @@ using Entities.Concrete;
 using Entities.DTO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,17 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var result=BusinessRules.Run(CheckIfTheCarHasBeenDelivered(rental));
+            var result = RulesForAdding(rental);
             if (!result.Success) return result;
 
             _rentalDal.Add(rental);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.RentalSuccessful);
+        }
+
+        public IResult RulesForAdding(Rental rental)
+        {
+            return BusinessRules.Run(CheckIfTheCarIsAlreadyRentedInTheSelectedDateRange(rental), CheckIfTheCarHasBeenDelivered(rental),
+                CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(rental));
         }
 
         public IResult Delete(Rental rental)
@@ -52,7 +59,7 @@ namespace Business.Concrete
         public IDataResult<List<RentalDetailDTO>> GetDetails()
         {
             var result = _rentalDal.GetDetails();
-            return new SuccessDataResult<List<RentalDetailDTO>>(result,Messages.Listed);
+            return new SuccessDataResult<List<RentalDetailDTO>>(result, Messages.Listed);
         }
 
         public IResult Update(Rental rental)
@@ -63,10 +70,32 @@ namespace Business.Concrete
 
         private IResult CheckIfTheCarHasBeenDelivered(Rental rental)
         {
-            var result = _rentalDal.Get(r => r.CarId == rental.CarId&&r.ReturnDate==null);
+            var result = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
             if (result != null)
                 if (rental.ReturnDate == null || rental.ReturnDate > result.RentDate)
                     return new ErrorResult(Messages.TheCarHasNotBeenDeliveredYet);
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfTheCarIsAlreadyRentedInTheSelectedDateRange(Rental rental)
+        {
+            var result = _rentalDal.Get(r =>
+                r.CarId == rental.CarId
+                && (r.RentDate.Date == rental.RentDate.Date
+                || (r.RentDate.Date < rental.RentDate.Date
+                && (r.ReturnDate == null || ((DateTime)r.ReturnDate).Date > rental.RentDate.Date))));
+
+            if (result != null)
+                return new ErrorResult(Messages.TheCarIsAlreadyRentedInTheSelectedDateRange);
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(Rental rental)
+        {
+            var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && rental.ReturnDate == null && r.RentDate.Date > rental.RentDate);
+            if (result.Any()) return new ErrorResult(Messages.TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture);
 
             return new SuccessResult();
         }

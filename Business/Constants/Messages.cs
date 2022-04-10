@@ -25,5 +25,9 @@ namespace Business.Constants
         public const string RegistrationSuccessful = "Kayıt başarılı";
         public const string TokenCreated = "Token başarı ile oluşturuldu";
         public const string NotAuthorized = "Yetkiniz yok";
+        public const string PaymentSuccessful = "Ödeme başarılı";
+        public const string TheCarIsAlreadyRentedInTheSelectedDateRange = "Bu araba seçilen tarih aralığında zaten kiralanmış";
+        public const string TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture = "İleri tarihlerde kiralanmış araç varken, teslim tarihi boş bırakılamaz";
+        public const string RentalSuccessful = "Kiralama işlemi başarılı";
     }
 }
