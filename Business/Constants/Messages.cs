@@ -25,7 +25,7 @@ namespace Business.Constants
         public const string RegistrationSuccessful = "Kayıt başarılı";
         public const string TokenCreated = "Token başarı ile oluşturuldu";
         public const string NotAuthorized = "Yetkiniz yok";
-        public const string PaymentSuccessful = "Ödeme başarılı";
+        public const string PaymentSuccessful = "Ödeme işlemi başarılı";
         public const string TheCarIsAlreadyRentedInTheSelectedDateRange = "Bu araba seçilen tarih aralığında zaten kiralanmış";
         public const string TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture = "İleri tarihlerde kiralanmış araç varken, teslim tarihi boş bırakılamaz";
         public const string RentalSuccessful = "Kiralama işlemi başarılı";
@@ -33,5 +33,6 @@ namespace Business.Constants
         public const string ThisCardIsAlreadyRegisteredForThisCustomer = "Bu kart, bu müşteri için zaten kayıtlı";
         public const string PaymentInformationSuccessfullySaved = "Ödeme bilgileri başarıyla kayıt edildi";
         public const string PasswordsDoNotMatch = "Şifreler uyuşmuyor";
+        public const string LastTwoDigitsOfTheYearMustBeEntered = "Yılın sadece son 2 hanesi girilmelidir";
     }
 }

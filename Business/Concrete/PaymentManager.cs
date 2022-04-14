@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Validation.FluentValidation;
 using Core.Utilities.Business;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
@@ -21,6 +23,7 @@ namespace Business.Concrete
             _paymentDal = paymentDal;
         }
 
+        [FluentValidationAspect(typeof(FVPaymentValidator))]
         public IResult Add(Payment payment)
         {
             var result = BusinessRules.Run(CheckIfThisCardIsAlreadyRegisteredForThisCustomer(payment));
@@ -62,11 +65,13 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [FluentValidationAspect(typeof(FVPaymentValidator))]
         public IResult Pay(Payment payment)
         {
             return new SuccessResult(Messages.PaymentSuccessful);
         }
 
+        [FluentValidationAspect(typeof(FVPaymentValidator))]
         public IResult Update(Payment payment)
         {
             _paymentDal.Add(payment);
