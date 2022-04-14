@@ -39,7 +39,7 @@ namespace Business.Concrete
         public IResult RulesForAdding(Rental rental)
         {
             return BusinessRules.Run(CheckIfTheCarIsAlreadyRentedInTheSelectedDateRange(rental), CheckIfTheCarHasBeenDelivered(rental),
-                CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(rental), CheckIfTheCustomerIsFindeksScoreIsSufficientForThisCar(rental.CarId,rental.CustomerId));
+                CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(rental), CheckIfTheCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId,rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate));
         }
 
         public IResult Delete(Rental rental)
@@ -104,7 +104,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckIfTheCustomerIsFindeksScoreIsSufficientForThisCar(int carId,int customerId)
+        private IResult CheckIfTheCustomerIsFindeksPointIsSufficientForThisCar(int carId,int customerId)
         {
             var carResult = _carService.GetById(carId);
             if (!carResult.Success) return new ErrorResult(carResult.Message);
@@ -113,7 +113,15 @@ namespace Business.Concrete
             if(!customerResult.Success) return new ErrorResult(customerResult.Message);
 
             if (carResult.Data.FindeksPoint > customerResult.Data.FindeksPoint)
-                return new ErrorResult(Messages.CustomerFindeksScoreIsNotEnoughForThisCar);
+                return new ErrorResult(Messages.CustomerFindeksPointIsNotEnoughForThisCar);
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfRentDateIsBeforeToday(DateTime rentDate)
+        {
+            if (rentDate.Date < DateTime.Now.Date)
+                return new ErrorResult(Messages.RentalDateCannotBeBeforeToday);
 
             return new SuccessResult();
         }
