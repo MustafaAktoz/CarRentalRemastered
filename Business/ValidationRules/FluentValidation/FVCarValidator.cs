@@ -14,6 +14,8 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(c=>c.Name).MinimumLength(2);
             RuleFor(c=>c.DailyPrice).GreaterThan(0);
+            RuleFor(c=>c.FindeksPoint).GreaterThanOrEqualTo(0);
+            RuleFor(c=>c.FindeksPoint).LessThanOrEqualTo(1900);
         }
     }
 }

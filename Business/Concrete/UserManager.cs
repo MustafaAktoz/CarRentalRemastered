@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Deleted);
         }
 
+        public IResult UpdateFirstAndLastName(UpdateFirstAndLastNameDTO updateFirstAndLastNameDTO)
+        {
+            var result = _userDal.Get(u => u.Id == updateFirstAndLastNameDTO.Id);
+            result.FirstName = updateFirstAndLastNameDTO.FirstName;
+            result.LastName = updateFirstAndLastNameDTO.LastName;
+
+            return Update(result);
+        }
+
         public IDataResult<List<User>> GetAll()
         {
             var result = _userDal.GetAll();
@@ -56,10 +66,23 @@ namespace Business.Concrete
             return new SuccessDataResult<List<OperationClaim>>(result,Messages.Listed);
         }
 
+        public IDataResult<UserDTO> GetDTOById(int id)
+        {
+            var result = _userDal.GetDTO(u => u.Id == id);
+            return new SuccessDataResult<UserDTO>(result, Messages.Geted);
+        }
+
         public IResult Update(User user)
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult UpdateEmail(UpdateEmailDTO updateEmailDTO)
+        {
+            var result = _userDal.Get(u=>u.Id==updateEmailDTO.Id);
+            result.Email = updateEmailDTO.Email;
+            return Update(result);
         }
     }
 }

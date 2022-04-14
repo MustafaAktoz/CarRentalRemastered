@@ -70,10 +70,19 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getAllByUserId")]
-        public IActionResult GetAllByUserId(int userId)
+        [HttpGet("getAllByCustomerId")]
+        public IActionResult GetAllByCustomerId(int customerId)
         {
-            var result = _paymentService.GetAllByUserId(userId);
+            var result = _paymentService.GetAllByCustomerId(customerId);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost("checkIfThisCardIsAlreadyRegisteredForThisCustomer")]
+        public IActionResult CheckIfThisCardIsAlreadyRegisteredForThisCustomer(Payment payment)
+        {
+            var result = _paymentService.CheckIfThisCardIsAlreadyRegisteredForThisCustomer(payment);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);

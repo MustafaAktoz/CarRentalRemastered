@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.DTO
+namespace Entities.DTOs
 {
     public class CarDetailDTO:IDTO
     {
@@ -16,5 +16,6 @@ namespace Entities.DTO
         public decimal DailyPrice { get; set; }
         public string ModelYear { get; set; }
         public string Description { get; set; }
+        public int FindeksPoint { get; set; }
     }
 }

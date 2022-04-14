@@ -6,7 +6,7 @@ using Core.Utilities.Result;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Core.Utilities.Security.JWT.Abstract;
-using Entities.DTO;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,10 +67,37 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.RegistrationSuccessful);
         }
 
+        public IResult UpdatePassword(UpdatePasswordDTO updatePasswordDTO)
+        {
+            var result = BusinessRules.Run(CheckIfPasswordsMatch(updatePasswordDTO.NewPassword,updatePasswordDTO.NewPasswordAgain));
+            if (!result.Success) return result;
+
+            var userResult = _userService.GetById(updatePasswordDTO.Id);
+
+            var passwordVerificationResult = HashingHelper.VerifyPasswordHash(updatePasswordDTO.Password,userResult.Data.PasswordHash,userResult.Data.PasswordSalt);
+            if (!passwordVerificationResult) return new ErrorResult(Messages.PasswordIsIncorrect);
+
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(updatePasswordDTO.NewPassword,out passwordHash,out passwordSalt);
+
+            userResult.Data.PasswordHash = passwordHash;
+            userResult.Data.PasswordSalt = passwordSalt;
+
+            return _userService.Update(userResult.Data);
+        }
+
         private IResult CheckIfEmailIsAlreadyRegistered(string email)
         {
             var userResult = _userService.GetByEmail(email);
             if (userResult.Data != null) return new ErrorResult(Messages.EmailIsAlreadyRegistered);
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfPasswordsMatch(string newPassword, string newPasswordAgain)
+        {
+            if (newPassword != newPasswordAgain)
+                return new ErrorResult(Messages.PasswordsDoNotMatch);
 
             return new SuccessResult();
         }

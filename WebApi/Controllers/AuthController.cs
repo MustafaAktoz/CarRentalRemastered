@@ -1,7 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Result;
 using Core.Utilities.Security.JWT;
-using Entities.DTO;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +42,15 @@ namespace WebApi.Controllers
 
             var newSuccessDataResult = new SuccessDataResult<AccessToken>(createAccessTokenResult.Data, result.Message);
             return Ok(newSuccessDataResult);
+        }
+
+        [HttpPost("updatePassword")]
+        public IActionResult UpdatePassword(UpdatePasswordDTO updatePasswordDTO)
+        {
+            var result = _authService.UpdatePassword(updatePasswordDTO);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

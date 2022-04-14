@@ -13,7 +13,9 @@ namespace Business.Abstract
         IResult Delete(Payment payment);
         IDataResult<Payment> GetById(int id);
         IDataResult<List<Payment>> GetAll();
-        IDataResult<List<Payment>> GetAllByUserId(int userId);
+        IDataResult<List<Payment>> GetAllByCustomerId(int customerId);
 
+        IResult CheckIfThisCardIsAlreadyRegisteredForThisCustomer(Payment payment);
+        
     }
 }

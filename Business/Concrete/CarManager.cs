@@ -9,7 +9,7 @@ using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTO;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +36,7 @@ namespace Business.Concrete
         }
 
         [SecuredOperationAspect("admin")]
+        [RemoveCashAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
@@ -92,6 +93,8 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDTO>>(result, Messages.Listed);
         }
 
+        [FluentValidationAspect(typeof(FVCarValidator))]
+        [RemoveCashAspect("ICarService.Get")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);

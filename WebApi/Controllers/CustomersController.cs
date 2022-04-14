@@ -52,6 +52,15 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getByUserId")]
+        public IActionResult GetByUserId(int userId)
+        {
+            var result = _customerService.GetByUserId(userId);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpGet("getAll")]
         public IActionResult GetAll()
         {

@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,8 +23,11 @@ namespace Business.Concrete
 
         public IResult Add(Payment payment)
         {
+            var result = BusinessRules.Run(CheckIfThisCardIsAlreadyRegisteredForThisCustomer(payment));
+            if (!result.Success) return result;
+
             _paymentDal.Add(payment);
-            return new SuccessResult(Messages.Added);
+            return new SuccessResult(Messages.PaymentInformationSuccessfullySaved);
         }
 
         public IResult Delete(Payment payment)
@@ -35,19 +39,27 @@ namespace Business.Concrete
         public IDataResult<List<Payment>> GetAll()
         {
             var result = _paymentDal.GetAll();
-            return new SuccessDataResult<List<Payment>>(result);
+            return new SuccessDataResult<List<Payment>>(result, Messages.Listed);
         }
 
-        public IDataResult<List<Payment>> GetAllByUserId(int userId)
+        public IDataResult<List<Payment>> GetAllByCustomerId(int customerId)
         {
-            var result = _paymentDal.GetAll(p=>p.UserId==userId);
-            return new SuccessDataResult<List<Payment>>(result);
+            var result = _paymentDal.GetAll(p => p.CustomerId == customerId);
+            return new SuccessDataResult<List<Payment>>(result, Messages.Listed);
         }
 
         public IDataResult<Payment> GetById(int id)
         {
-            var result = _paymentDal.Get(p=>p.Id==id);
-            return new SuccessDataResult<Payment>(result,Messages.Geted);
+            var result = _paymentDal.Get(p => p.Id == id);
+            return new SuccessDataResult<Payment>(result, Messages.Geted);
+        }
+
+        public IResult CheckIfThisCardIsAlreadyRegisteredForThisCustomer(Payment payment)
+        {
+            var result = _paymentDal.Get(p => p.CustomerId == payment.CustomerId && p.CardNumber == payment.CardNumber);
+            if (result != null) return new ErrorResult(Messages.ThisCardIsAlreadyRegisteredForThisCustomer);
+
+            return new SuccessResult();
         }
 
         public IResult Pay(Payment payment)

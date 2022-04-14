@@ -2,7 +2,7 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities.Concrete;
-using Entities.DTO;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on car.ColorId equals color.Id
                              join brand in context.Brands
                              on car.BrandId equals brand.Id
-                             select new CarDetailDTO { Id = car.Id, BrandName = brand.Name, ColorName = color.Name, Name = car.Name, ModelYear = car.ModelYear, DailyPrice = car.DailyPrice, Description = car.Description };
+                             select new CarDetailDTO { Id = car.Id, BrandName = brand.Name, ColorName = color.Name, Name = car.Name, ModelYear = car.ModelYear, DailyPrice = car.DailyPrice, Description = car.Description,FindeksPoint=car.FindeksPoint };
                 return result.SingleOrDefault();
             }
         }
@@ -37,7 +37,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on car.ColorId equals color.Id
                              join brand in context.Brands
                              on car.BrandId equals brand.Id
-                             select new CarDetailDTO { Id = car.Id, BrandName = brand.Name, ColorName = color.Name, Name = car.Name, ModelYear = car.ModelYear, DailyPrice = car.DailyPrice, Description = car.Description };
+                             select new CarDetailDTO { Id = car.Id, BrandName = brand.Name, ColorName = color.Name, Name = car.Name, ModelYear = car.ModelYear, DailyPrice = car.DailyPrice, Description = car.Description,FindeksPoint=car.FindeksPoint };
                 return result.ToList();
             }
         }

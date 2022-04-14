@@ -29,5 +29,9 @@ namespace Business.Constants
         public const string TheCarIsAlreadyRentedInTheSelectedDateRange = "Bu araba seçilen tarih aralığında zaten kiralanmış";
         public const string TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture = "İleri tarihlerde kiralanmış araç varken, teslim tarihi boş bırakılamaz";
         public const string RentalSuccessful = "Kiralama işlemi başarılı";
+        public const string CustomerFindeksScoreIsNotEnoughForThisCar = "Findeks puanınız bu araba için yeterli değil";
+        public const string ThisCardIsAlreadyRegisteredForThisCustomer = "Bu kart, bu müşteri için zaten kayıtlı";
+        public const string PaymentInformationSuccessfullySaved = "Ödeme bilgileri başarıyla kayıt edildi";
+        public const string PasswordsDoNotMatch = "Şifreler uyuşmuyor";
     }
 }

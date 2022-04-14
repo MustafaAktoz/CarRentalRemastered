@@ -4,7 +4,7 @@ using Core.Utilities.Business;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTO;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,10 +17,14 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
+        ICarService _carService;
+        ICustomerService _customerService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
 
         public IResult Add(Rental rental)
@@ -35,7 +39,7 @@ namespace Business.Concrete
         public IResult RulesForAdding(Rental rental)
         {
             return BusinessRules.Run(CheckIfTheCarIsAlreadyRentedInTheSelectedDateRange(rental), CheckIfTheCarHasBeenDelivered(rental),
-                CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(rental));
+                CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(rental), CheckIfTheCustomerIsFindeksScoreIsSufficientForThisCar(rental.CarId,rental.CustomerId));
         }
 
         public IResult Delete(Rental rental)
@@ -96,6 +100,20 @@ namespace Business.Concrete
         {
             var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && rental.ReturnDate == null && r.RentDate.Date > rental.RentDate);
             if (result.Any()) return new ErrorResult(Messages.TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture);
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfTheCustomerIsFindeksScoreIsSufficientForThisCar(int carId,int customerId)
+        {
+            var carResult = _carService.GetById(carId);
+            if (!carResult.Success) return new ErrorResult(carResult.Message);
+
+            var customerResult = _customerService.GetById(customerId);
+            if(!customerResult.Success) return new ErrorResult(customerResult.Message);
+
+            if (carResult.Data.FindeksPoint > customerResult.Data.FindeksPoint)
+                return new ErrorResult(Messages.CustomerFindeksScoreIsNotEnoughForThisCar);
 
             return new SuccessResult();
         }

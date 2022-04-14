@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.DTO
+namespace Entities.DTOs
 {
     public class RegisterDTO : IDTO
     {

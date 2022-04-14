@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Validation.FluentValidation;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,6 +22,7 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
+        [FluentValidationAspect(typeof(FVCustomerValidator))]
         public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
@@ -44,6 +47,13 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(result, Messages.Geted);
         }
 
+        public IDataResult<Customer> GetByUserId(int userId)
+        {
+            var result = _customerDal.Get(c => c.UserId == userId);
+            return new SuccessDataResult<Customer>(result, Messages.Geted);
+        }
+
+        [FluentValidationAspect(typeof(FVCustomerValidator))]
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
