@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Core.Extensions;
 using Business.Constants;
+using Core.Exceptions.Concrete;
 
 namespace Business.BusinessAspect.Autofac.Security
 {
@@ -31,7 +32,7 @@ namespace Business.BusinessAspect.Autofac.Security
                 if (_roles.Contains(role)) return;
             }
 
-            throw new Exception(Messages.NotAuthorized);
+            throw new AuthorizationCustomException(Messages.NotAuthorized);
         }
     }
 }

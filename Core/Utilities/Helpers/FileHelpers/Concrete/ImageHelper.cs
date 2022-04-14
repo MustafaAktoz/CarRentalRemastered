@@ -1,4 +1,5 @@
 ﻿using Core.Constants;
+using Core.Exceptions.Concrete;
 using Core.Utilities.Helpers.FileHelpers.Abstract;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -44,7 +45,7 @@ namespace Core.Utilities.Helpers.FileHelpers.Concrete
             var extensions = new List<string> { ".jpg", ".png", "jpeg" };
 
             if (!extensions.Contains(extension))
-                throw new Exception(Messages.UnsupportedFileType);
+                throw new FileHelperCustomException(Messages.UnsupportedFileType);
         }
 
         private void CreateDirectory(string path)

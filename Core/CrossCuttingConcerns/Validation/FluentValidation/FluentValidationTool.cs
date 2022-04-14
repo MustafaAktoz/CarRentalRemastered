@@ -12,7 +12,7 @@ namespace Core.CrossCuttingConcerns.Validation.FluentValidation
             var context = new ValidationContext<object>(entity);
             var result=validator.Validate(context);
             if (!result.IsValid)
-                throw new ValidationException(result.Errors); ;
+                throw new ValidationException(result.Errors);
         }
     }
 }
