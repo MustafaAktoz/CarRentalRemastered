@@ -38,8 +38,8 @@ namespace Business.Concrete
 
         public IResult RulesForAdding(Rental rental)
         {
-            return BusinessRules.Run(CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental), CheckIfThisCarHasBeenReturned(rental),
-                CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(rental), CheckIfCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId, rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate),
+            return BusinessRules.Run(CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(rental), CheckIfThisCarHasBeenReturned(rental), CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental),
+                CheckIfCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId, rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate),
                 CheckIfReturnDateIsBeforeRentDate(rental.ReturnDate, rental.RentDate));
         }
 
