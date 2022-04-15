@@ -38,8 +38,9 @@ namespace Business.Concrete
 
         public IResult RulesForAdding(Rental rental)
         {
-            return BusinessRules.Run(CheckIfTheCarIsAlreadyRentedInTheSelectedDateRange(rental), CheckIfTheCarHasBeenDelivered(rental),
-                CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(rental), CheckIfTheCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId,rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate));
+            return BusinessRules.Run(CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental), CheckIfThisCarHasBeenReturned(rental),
+                CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsEmpty(rental), CheckIfCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId, rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate),
+                CheckIfReturnDateIsBeforeRentDate(rental.ReturnDate, rental.RentDate));
         }
 
         public IResult Delete(Rental rental)
@@ -72,17 +73,17 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Updated);
         }
 
-        private IResult CheckIfTheCarHasBeenDelivered(Rental rental)
+        private IResult CheckIfThisCarHasBeenReturned(Rental rental)
         {
             var result = _rentalDal.Get(r => r.CarId == rental.CarId && r.ReturnDate == null);
             if (result != null)
                 if (rental.ReturnDate == null || rental.ReturnDate > result.RentDate)
-                    return new ErrorResult(Messages.TheCarHasNotBeenDeliveredYet);
+                    return new ErrorResult(Messages.ThisCarHasNotBeenReturnedYet);
 
             return new SuccessResult();
         }
 
-        private IResult CheckIfTheCarIsAlreadyRentedInTheSelectedDateRange(Rental rental)
+        private IResult CheckIfThisCarIsAlreadyRentedInSelectedDateRange(Rental rental)
         {
             var result = _rentalDal.Get(r =>
                 r.CarId == rental.CarId
@@ -91,26 +92,26 @@ namespace Business.Concrete
                 && (r.ReturnDate == null || ((DateTime)r.ReturnDate).Date > rental.RentDate.Date))));
 
             if (result != null)
-                return new ErrorResult(Messages.TheCarIsAlreadyRentedInTheSelectedDateRange);
+                return new ErrorResult(Messages.ThisCarIsAlreadyRentedInSelectedDateRange);
 
             return new SuccessResult();
         }
 
-        private IResult CheckIfThereIsARentalCarOnTheNextDatesWhenTheDeliveryDateIsNull(Rental rental)
+        private IResult CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsEmpty(Rental rental)
         {
             var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && rental.ReturnDate == null && r.RentDate.Date > rental.RentDate);
-            if (result.Any()) return new ErrorResult(Messages.TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture);
+            if (result.Any()) return new ErrorResult(Messages.ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate);
 
             return new SuccessResult();
         }
 
-        private IResult CheckIfTheCustomerIsFindeksPointIsSufficientForThisCar(int carId,int customerId)
+        private IResult CheckIfCustomerIsFindeksPointIsSufficientForThisCar(int carId, int customerId)
         {
             var carResult = _carService.GetById(carId);
             if (!carResult.Success) return new ErrorResult(carResult.Message);
 
             var customerResult = _customerService.GetById(customerId);
-            if(!customerResult.Success) return new ErrorResult(customerResult.Message);
+            if (!customerResult.Success) return new ErrorResult(customerResult.Message);
 
             if (carResult.Data.FindeksPoint > customerResult.Data.FindeksPoint)
                 return new ErrorResult(Messages.CustomerFindeksPointIsNotEnoughForThisCar);
@@ -122,6 +123,15 @@ namespace Business.Concrete
         {
             if (rentDate.Date < DateTime.Now.Date)
                 return new ErrorResult(Messages.RentalDateCannotBeBeforeToday);
+
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfReturnDateIsBeforeRentDate(DateTime? returnDate, DateTime rentDate)
+        {
+            if (returnDate != null)
+                if (returnDate < rentDate)
+                    return new ErrorResult(Messages.ReturnDateCannotBeEarlierThanRentDate);
 
             return new SuccessResult();
         }

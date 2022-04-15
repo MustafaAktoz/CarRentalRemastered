@@ -78,7 +78,7 @@ namespace Business.Concrete
         private IResult CheckIfTheImageLimitForThisCarHasBeenExceeded(int carId)
         {
             var result = _carImageDal.GetAll(ci => ci.CarId == carId);
-            if (result.Count >= 5) return new ErrorResult(Messages.TheImageLimitForThisCarHasBeenExceeded);
+            if (result.Count >= 5) return new ErrorResult(Messages.ImageLimitForThisCarHasBeenExceeded);
 
             return new SuccessResult();
         }

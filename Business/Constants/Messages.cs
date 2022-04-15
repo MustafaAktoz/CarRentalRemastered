@@ -16,8 +16,8 @@ namespace Business.Constants
         public const string Geted = "Data başarıyla getirildi";
         public const string Listed = "Data başarıyla listelendi";
 
-        public const string TheCarHasNotBeenDeliveredYet = "Araba henüz teslim edilmedi";
-        public const string TheImageLimitForThisCarHasBeenExceeded = "Bu araba için daha fazla resim eklenemez";
+        public const string ThisCarHasNotBeenReturnedYet = "Bu araba henüz teslim edilmedi";
+        public const string ImageLimitForThisCarHasBeenExceeded = "Bu araba için daha fazla resim eklenemez";
         public const string EmailNotFound = "Email bulunamadı";
         public const string PasswordIsIncorrect = "Şifre yanlış";
         public const string LoginSuccessful = "Giriş başarılı";
@@ -26,14 +26,15 @@ namespace Business.Constants
         public const string TokenCreated = "Token başarı ile oluşturuldu";
         public const string NotAuthorized = "Yetkiniz yok";
         public const string PaymentSuccessful = "Ödeme işlemi başarılı";
-        public const string TheCarIsAlreadyRentedInTheSelectedDateRange = "Bu araba seçilen tarih aralığında zaten kiralanmış";
-        public const string TheDeliveryDateCannotBeLeftBlankWhenThereIsARentedVehicleInTheFuture = "İleri tarihlerde kiralanmış araç varken, teslim tarihi boş bırakılamaz";
+        public const string ThisCarIsAlreadyRentedInSelectedDateRange = "Bu araba seçilen tarih aralığında zaten kiralanmış";
+        public const string ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate = "Bu araç, daha sonraki bir tarihte de kiralanmış olduğu için teslim tarihi boş bırakılamaz";
+        public const string ReturnDateCannotBeEarlierThanRentDate = "Teslim tarihi, kiralama tarihinden daha önce olamaz";
         public const string RentalSuccessful = "Kiralama işlemi başarılı";
         public const string CustomerFindeksPointIsNotEnoughForThisCar = "Findeks puanınız bu araba için yeterli değil";
         public const string ThisCardIsAlreadyRegisteredForThisCustomer = "Bu kart, bu müşteri için zaten kayıtlı";
         public const string PaymentInformationSuccessfullySaved = "Ödeme bilgileri başarıyla kayıt edildi";
         public const string PasswordsDoNotMatch = "Şifreler uyuşmuyor";
-        public const string LastTwoDigitsOfTheYearMustBeEntered = "Yılın sadece son 2 hanesi girilmelidir";
+        public const string LastTwoDigitsOfYearMustBeEntered = "Yılın sadece son 2 hanesi girilmelidir";
         public const string RentalDateCannotBeBeforeToday = "Kiralama tarihi bugünden önce olamaz";
     }
 }
