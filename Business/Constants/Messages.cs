@@ -27,14 +27,14 @@ namespace Business.Constants
         public const string NotAuthorized = "Yetkiniz yok";
         public const string PaymentSuccessful = "Ödeme işlemi başarılı";
         public const string ThisCarIsAlreadyRentedInSelectedDateRange = "Bu araba seçilen tarih aralığında zaten kiralanmış";
-        public const string ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate = "Bu araç, daha sonraki bir tarihte de kiralanmış olduğu için teslim tarihi boş bırakılamaz";
+        public const string ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate = "Bu araç, daha sonraki bir tarihte kiralanmış olduğu için teslim tarihi boş bırakılamaz";
         public const string ReturnDateCannotBeEarlierThanRentDate = "Teslim tarihi, kiralama tarihinden daha önce olamaz";
+        public const string RentalDateCannotBeBeforeToday = "Geçmişe araba kiralayamazsın :)";
         public const string RentalSuccessful = "Kiralama işlemi başarılı";
         public const string CustomerFindeksPointIsNotEnoughForThisCar = "Findeks puanınız bu araba için yeterli değil";
         public const string ThisCardIsAlreadyRegisteredForThisCustomer = "Bu kart, bu müşteri için zaten kayıtlı";
         public const string PaymentInformationSuccessfullySaved = "Ödeme bilgileri başarıyla kayıt edildi";
         public const string PasswordsDoNotMatch = "Şifreler uyuşmuyor";
         public const string LastTwoDigitsOfYearMustBeEntered = "Yılın sadece son 2 hanesi girilmelidir";
-        public const string RentalDateCannotBeBeforeToday = "Kiralama tarihi bugünden önce olamaz";
     }
 }
