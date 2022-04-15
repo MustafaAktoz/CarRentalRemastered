@@ -39,7 +39,7 @@ namespace Business.Concrete
         public IResult RulesForAdding(Rental rental)
         {
             return BusinessRules.Run(CheckIfThisCarIsAlreadyRentedInSelectedDateRange(rental), CheckIfThisCarHasBeenReturned(rental),
-                CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsEmpty(rental), CheckIfCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId, rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate),
+                CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(rental), CheckIfCustomerIsFindeksPointIsSufficientForThisCar(rental.CarId, rental.CustomerId), CheckIfRentDateIsBeforeToday(rental.RentDate),
                 CheckIfReturnDateIsBeforeRentDate(rental.ReturnDate, rental.RentDate));
         }
 
@@ -97,7 +97,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsEmpty(Rental rental)
+        private IResult CheckIfThisCarIsRentedAtALaterDateWhileReturnDateIsNull(Rental rental)
         {
             var result = _rentalDal.GetAll(r => r.CarId == rental.CarId && rental.ReturnDate == null && r.RentDate.Date > rental.RentDate);
             if (result.Any()) return new ErrorResult(Messages.ReturnDateCannotBeLeftBlankAsThisCarWasAlsoRentedAtALaterDate);
