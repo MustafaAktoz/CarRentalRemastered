@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Abstract;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace Entities.DTOs
         public string ModelYear { get; set; }
         public string Description { get; set; }
         public int FindeksPoint { get; set; }
+
+        public List<CarImage> CarImages { get; set; }
     }
 }
