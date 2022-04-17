@@ -36,5 +36,8 @@ namespace Business.Constants
         public const string PaymentInformationSuccessfullySaved = "Ödeme bilgileri başarıyla kayıt edildi";
         public const string PasswordsDoNotMatch = "Şifreler uyuşmuyor";
         public const string LastTwoDigitsOfYearMustBeEntered = "Yılın sadece son 2 hanesi girilmelidir";
+        public const string EmailUpdated = "Email başarıyla güncellendi";
+        public const string FirstAndLastNameUpdated = "Ad ve Soyad başarıyla güncellendi";
+        public const string PasswordUpdated = "Şifre başarıyla güncellendi";
     }
 }

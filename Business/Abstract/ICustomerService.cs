@@ -12,5 +12,8 @@ namespace Business.Abstract
         IDataResult<Customer> GetById(int id);
         IDataResult<Customer> GetByUserId(int userId);
         IDataResult<List<Customer>> GetAll();
+
+
+        IResult FakeCustomerAdd(int userId);
     }
 }

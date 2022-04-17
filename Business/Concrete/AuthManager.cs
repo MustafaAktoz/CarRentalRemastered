@@ -45,9 +45,6 @@ namespace Business.Concrete
 
         public IDataResult<User> Register(RegisterDTO registerDTO)
         {
-            var result = BusinessRules.Run(CheckIfEmailIsAlreadyRegistered(registerDTO.Email));
-            if (!result.Success) return new ErrorDataResult<User>(result.Message);
-
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(registerDTO.Password, out passwordHash, out passwordSalt);
 
@@ -83,15 +80,10 @@ namespace Business.Concrete
             userResult.Data.PasswordHash = passwordHash;
             userResult.Data.PasswordSalt = passwordSalt;
 
-            return _userService.Update(userResult.Data);
-        }
+            var updateResult = _userService.Update(userResult.Data);
+            if (!updateResult.Success) return updateResult;
 
-        private IResult CheckIfEmailIsAlreadyRegistered(string email)
-        {
-            var userResult = _userService.GetByEmail(email);
-            if (userResult.Data != null) return new ErrorResult(Messages.EmailIsAlreadyRegistered);
-
-            return new SuccessResult();
+            return new SuccessResult(Messages.PasswordUpdated);
         }
 
         private IResult CheckIfPasswordsMatch(string newPassword, string newPasswordAgain)

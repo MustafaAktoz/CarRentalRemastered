@@ -38,12 +38,12 @@ namespace Business.Concrete
         public IDataResult<List<Customer>> GetAll()
         {
             var result = _customerDal.GetAll();
-            return new SuccessDataResult<List<Customer>>(result,Messages.Listed);
+            return new SuccessDataResult<List<Customer>>(result, Messages.Listed);
         }
 
         public IDataResult<Customer> GetById(int id)
         {
-            var result = _customerDal.Get(c=>c.Id==id);
+            var result = _customerDal.Get(c => c.Id == id);
             return new SuccessDataResult<Customer>(result, Messages.Geted);
         }
 
@@ -58,6 +58,12 @@ namespace Business.Concrete
         {
             _customerDal.Update(customer);
             return new SuccessResult(Messages.Updated);
+        }
+
+        public IResult FakeCustomerAdd(int userId)
+        {
+            _customerDal.Add(new Customer { UserId = userId, FindeksPoint = 1234, CompanyName = "Bilmem Ne LTD.ŞTİ" });
+            return new SuccessResult(Messages.Added);
         }
     }
 }
