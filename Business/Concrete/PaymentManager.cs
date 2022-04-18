@@ -35,8 +35,8 @@ namespace Business.Concrete
 
         public IResult Delete(Payment payment)
         {
-            _paymentDal.Add(payment);
-            return new SuccessResult(Messages.Added);
+            _paymentDal.Delete(payment);
+            return new SuccessResult(Messages.Deleted);
         }
 
         public IDataResult<List<Payment>> GetAll()
@@ -74,8 +74,8 @@ namespace Business.Concrete
         [FluentValidationAspect(typeof(FVPaymentValidator))]
         public IResult Update(Payment payment)
         {
-            _paymentDal.Add(payment);
-            return new SuccessResult(Messages.Added);
+            _paymentDal.Update(payment);
+            return new SuccessResult(Messages.Updated);
         }
     }
 }
