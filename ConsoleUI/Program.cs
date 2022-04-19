@@ -23,7 +23,7 @@ namespace ConsoleUI
             _colorService = new ColorManager(new EFColorDal());
             _customerService = new CustomerManager(new EFCustomerDal());
             _rentalService = new RentalManager(new EFRentalDal(), _carService, _customerService);
-            _userService = new UserManager(new EFUserDal());
+            _userService = new UserManager(new EFUserDal(), _customerService);
         }
 
         static void Main(string[] args)
@@ -154,8 +154,8 @@ namespace ConsoleUI
             Console.WriteLine("-Arabalar");
             var brands = _brandService.GetAll().Data;
             var colors = _colorService.GetAll().Data;
-            var car1 = new Car { BrandId = brands[brands.Count - 1].Id, ColorId = colors[colors.Count - 1].Id, Name = "Focus", ModelYear = "2010", DailyPrice = 300, Description = "Ford Focus" };
-            var car2 = new Car { BrandId = brands[brands.Count - 1].Id, ColorId = colors[colors.Count - 1].Id, Name = "Ranger", ModelYear = "2018", DailyPrice = 500, Description = "Ford Ranger" };
+            var car1 = new Car { BrandId = brands[brands.Count - 1].Id, ColorId = colors[colors.Count - 1].Id, Name = "Focus", ModelYear = 2010, DailyPrice = 300, Description = "Ford Focus" };
+            var car2 = new Car { BrandId = brands[brands.Count - 1].Id, ColorId = colors[colors.Count - 1].Id, Name = "Ranger", ModelYear = 2018, DailyPrice = 500, Description = "Ford Ranger" };
 
             _carService.Add(car1);
             _carService.Add(car2);
@@ -164,7 +164,7 @@ namespace ConsoleUI
             WriteCarsToScreen();
 
             Console.WriteLine("Güncellenmeden Sonra");
-            _carService.Update(new Car { Id = car1.Id, BrandId = car1.BrandId, ColorId = car1.ColorId, Name = "Fiesta", ModelYear = "2011", DailyPrice = 400, Description = "Ford Fiesta" });
+            _carService.Update(new Car { Id = car1.Id, BrandId = car1.BrandId, ColorId = car1.ColorId, Name = "Fiesta", ModelYear = 2011, DailyPrice = 400, Description = "Ford Fiesta" });
             car2.Name = "Ecosport";
             _carService.Update(car2);
             WriteCarsToScreen();

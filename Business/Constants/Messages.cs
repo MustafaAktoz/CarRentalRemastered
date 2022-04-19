@@ -39,5 +39,7 @@ namespace Business.Constants
         public const string EmailUpdated = "Email başarıyla güncellendi";
         public const string FirstAndLastNameUpdated = "Ad ve Soyad başarıyla güncellendi";
         public const string PasswordUpdated = "Şifre başarıyla güncellendi";
+        public const string ModelYearMustBeEnteredAsFourCharacters = "Model yılı 4 karakter olarak girilmelidir";
+        public const string CardNumberMustConsistOfLettersOnly = "Kart numarası sadece harflerden oluşmalıdır";
     }
 }
