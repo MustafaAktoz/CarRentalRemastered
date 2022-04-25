@@ -15,7 +15,7 @@ namespace Business.Abstract
         IDataResult<List<Payment>> GetAll();
         IDataResult<List<Payment>> GetAllByCustomerId(int customerId);
 
-        IResult CheckIfThisCardIsAlreadyRegisteredForThisCustomer(Payment payment);
+        IResult CheckIfThisCardIsAlreadySavedForThisCustomer(Payment payment);
         
     }
 }

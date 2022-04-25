@@ -26,7 +26,7 @@ namespace Business.Concrete
         [FluentValidationAspect(typeof(FVPaymentValidator))]
         public IResult Add(Payment payment)
         {
-            var result = BusinessRules.Run(CheckIfThisCardIsAlreadyRegisteredForThisCustomer(payment));
+            var result = BusinessRules.Run(CheckIfThisCardIsAlreadySavedForThisCustomer(payment));
             if (!result.Success) return result;
 
             _paymentDal.Add(payment);
@@ -57,7 +57,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Payment>(result, Messages.Geted);
         }
 
-        public IResult CheckIfThisCardIsAlreadyRegisteredForThisCustomer(Payment payment)
+        public IResult CheckIfThisCardIsAlreadySavedForThisCustomer(Payment payment)
         {
             var result = _paymentDal.Get(p => p.CustomerId == payment.CustomerId && p.CardNumber == payment.CardNumber);
             if (result != null) return new ErrorResult(Messages.ThisCardIsAlreadyRegisteredForThisCustomer);

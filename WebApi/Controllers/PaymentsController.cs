@@ -79,10 +79,10 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost("checkIfThisCardIsAlreadyRegisteredForThisCustomer")]
-        public IActionResult CheckIfThisCardIsAlreadyRegisteredForThisCustomer(Payment payment)
+        [HttpPost("checkIfThisCardIsAlreadySavedForThisCustomer")]
+        public IActionResult CheckIfThisCardIsAlreadySavedForThisCustomer(Payment payment)
         {
-            var result = _paymentService.CheckIfThisCardIsAlreadyRegisteredForThisCustomer(payment);
+            var result = _paymentService.CheckIfThisCardIsAlreadySavedForThisCustomer(payment);
             if (!result.Success) return BadRequest(result);
 
             return Ok(result);

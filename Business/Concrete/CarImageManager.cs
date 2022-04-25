@@ -44,6 +44,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.Added);
         }
 
+        [TransactionScopeAspect]
         public IResult Delete(int id)
         {
             var carImage = _carImageDal.Get(ci => ci.Id == id);
@@ -66,6 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(result, Messages.Listed);
         }
 
+        [TransactionScopeAspect]
         public IResult Update(int id, IFormFile file)
         {
             var carImage = _carImageDal.Get(ci => ci.Id == id);
